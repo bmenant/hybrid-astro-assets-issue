@@ -1,42 +1,29 @@
 ---
 import { Image } from 'astro:assets';
-import { getEntry } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 
-import image1 from '~/assets/img1.jpg';
-import image2 from '../assets/img2.jpg';
+import image2 from '~/assets/img2.jpg';
+import image3 from '~/assets/img3.jpg';
 
-export const prerender=true;
+const image1 = (await import('~/assets/img1.jpg')).default;
 
-const image3 = (await import('~/assets/img3.jpg')).default;
-
-const entry = await getEntry('img', 'img-from-collection');
-const image4 = entry.data.img;
+export const prerender= true;
 ---
 
 <Layout title="Welcome to Astro.">
 	<main>
 		<h1>Welcome to <span class="text-gradient">Astro</span> (prerendered)</h1>
-		<a href="/ssr">ssr</a>
+		<a href="/2-ssr-dynamic-import">ssr</a>
 
-		<h2>Image 1</h2>
+		<h2>Images</h2>
 		<p>
-			<Image src={image1} width="600" alt="img1" />
+			<Image src={image1} width="400" alt="img1"/>
 		</p>
-
-		<h2>Image 2</h2>
 		<p>
-			<Image src={image2} width="600" alt="img2" />
+			<Image src={image3} width="400" alt="img3"/>
 		</p>
-
-		<h2>Image 3</h2>
 		<p>
-			<Image src={image3} width="600" alt="img3" />
-		</p>
-
-		<h2>Image 4 (from collection)</h2>
-		<p>
-			<Image src={image4} width="600" alt="img4" />
+			<Image src={image2} width="400" alt="img2" />
 		</p>
 
 	</main>
@@ -55,6 +42,12 @@ const image4 = entry.data.img;
 	}
 	h2 {
 		font-size: 2rem;
+	}
+	p {
+		border-left: dashed 1px;
+		padding-left: 1rem;
+		color: red;
+		font-weight: bold;
 	}
 	.text-gradient {
 		background-image: var(--accent-gradient);

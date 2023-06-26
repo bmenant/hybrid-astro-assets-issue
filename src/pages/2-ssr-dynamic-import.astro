@@ -1,0 +1,68 @@
+---
+import {Image} from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+
+
+// Works!
+import image3 from '~/assets/img3.jpg';
+
+// Works!
+const image1 = (await import('~/assets/img1.jpg')).default;
+
+// Will fail!
+const image2 = (await import('~/assets/img2.jpg')).default;
+
+export const prerender = false;
+---
+
+<Layout title="Welcome to Astro.">
+    <main>
+        <h1>Welcome to <span class="text-gradient">Astro</span> (SSR)</h1>
+        <a href="/1-prerendered">prerendered</a>
+
+        <h2>Images</h2>
+        <p>
+            <Image src={image1} width="400" alt="img1"/>
+        </p>
+        <p>
+            <Image src={image3} width="400" alt="img3"/>
+        </p>
+        <p>
+            <Image src={image2} width="400" alt="img2" />
+        </p>
+    </main>
+</Layout>
+
+<style>
+    main {
+        margin: auto;
+        padding: 1.5rem;
+        max-width: 60ch;
+    }
+
+    h1, h2 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin: 0;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    p {
+        border-left: dashed 1px;
+        padding-left: 1rem;
+        color: red;
+        font-weight: bold;
+    }
+
+    .text-gradient {
+        background-image: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 400%;
+        background-position: 0%;
+    }
+</style>
+
